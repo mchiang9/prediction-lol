@@ -1,0 +1,54 @@
+---
+title: "League of Legends Match Info"
+author: "Michael Chiang"
+date: "2/5/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("/Users/michael/prediction-lol")
+```
+
+```{r}
+#Keep track of packages we install
+#install.packages("magrittr")
+#install.packages("dplyr")
+```
+
+
+
+```{r}
+#read in data set
+matchinfo  <- read.csv(file = "matchinfo.csv")
+```
+
+
+```{r}
+matchinfoNEW = matchinfo %>%
+ select(bResult, rResult, blueADCChamp, blueSupportChamp, redADCChamp, redSupportChamp)
+
+BlueMatch= matchinfoNEW %>%
+ select(bResult,blueADCChamp, blueSupportChamp)
+
+AsheBlue=BlueMatch %>%
+ filter(blueADCChamp== "Ashe")
+
+RedMatch= matchinfoNEW %>%
+ select(rResult,redADCChamp, redSupportChamp)
+
+AsheRed=RedMatch %>%
+ filter(redADCChamp== "Ashe")
+
+TotalAshe=AsheBlue %>%
+ summarise (count = n ())
+
+TotalAshe
+
+TotalAsheWin= AsheBlue %>%
+ filter(bResult==1) %>%
+ summarise (count = n ())
+
+TotalAsheWin
+```
+
