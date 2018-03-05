@@ -55,5 +55,25 @@ CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, redSupportChamp %in% supportL
 ```
 There are 5701 observations left cleaned out from 6799 observations.
 
+Create Ashe/Alistar Dataset
+```{r}
+asheAliB <- subset(CleanedmatchinfoNew, blueADCChamp == "Ashe" & blueSupportChamp == "Alistar")
+asheAliR <- subset(CleanedmatchinfoNew, redADCChamp == "Ashe" & redSupportChamp == "Alistar")
 
+asheAli <- rbind(asheAliB, asheAliR)
+```
+
+85 total observations of Ashe and Alistar combinations.
+```{r}
+# Total number of Ashe Alistar wins on blue side
+sum(asheAliB$bResult == 1)
+
+# Total number of Ashe Alistar wins on red side
+sum(asheAliR$rResult == 1)
+
+asheAliWinTotal <- sum(asheAliB$bResult == 1) + sum(asheAliR$rResult == 1)
+asheAliWinRate <- asheAliWinTotal/85
+asheAliWinTotal
+asheAliWinRate
+```
 
