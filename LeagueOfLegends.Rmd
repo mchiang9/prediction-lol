@@ -34,7 +34,7 @@ Begin process of cleaning data, so only marksman are in it.
 ```{r}
 # Take out non "Marksman" champions
 # List taken from http://leagueoflegends.wikia.com/wiki/ADC
-marksmanList <- c("Ashe","Caitlyn","Corki","Draven","Ezreal","Graves","Jhin","Jinx","Kalista","Kindred","Kog'maw","Lucian","Miss Fortune","Quinn","Sivir","Tristana","Twitch","Varus","Vayne","Vayne","Xayah")
+marksmanList <- c("Ashe","Caitlyn","Corki","Draven","Ezreal","Graves","Jhin","Jinx","Kalista","Kindred","Kogmaw","Lucian","Miss Fortune","Quinn","Sivir","Tristana","Twitch","Varus","Vayne","Vayne","Xayah")
 
 CleanedmatchinfoNew <- subset(matchinfoNew, blueADCChamp %in% marksmanList)
 CleanedmatchinfoNew <- subset(CleanedmatchinfoNew,redADCChamp %in% marksmanList)
@@ -48,12 +48,12 @@ Clean out support champions
 supportList <- c("Alistar","Annie","Bard","Blitzcrank","Brand","Braum","Fiddlesticks","Galio","Janna","Karma"
                   ,"Kennen","Leona","Lulu","Lux","Malphite","Miss Fortune","Morgana","Nami","Nautilus","Ornn",
                   "Poppy","Rakan","Shen","Sion","Sona","Soraka","Tahm Kench","Taric","Teemo","Thresh","Trundle",
-                  "Veigar","Vel'koz","Xerath","Zilean","Zoe","Zyra")
+                  "Veigar","Velkoz","Xerath","Zilean","Zoe","Zyra")
 
 CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, blueSupportChamp %in% supportList)
 CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, redSupportChamp %in% supportList)
 ```
-There are 5694 observations left cleaned out from 6799 observations.
+There are 5701 observations left cleaned out from 6799 observations.
 
 
 
