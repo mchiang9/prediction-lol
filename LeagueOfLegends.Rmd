@@ -34,7 +34,8 @@ Begin process of cleaning data, so only marksman are in it.
 ```{r}
 # Take out non "Marksman" champions
 # List taken from http://leagueoflegends.wikia.com/wiki/ADC
-marksmanList <- c("Ashe","Caitlyn","Corki","Draven","Ezreal","Graves","Jhin","Jinx","Kalista","Kindred","Kogmaw","Lucian","Miss Fortune","Quinn","Sivir","Tristana","Twitch","Varus","Vayne","Vayne","Xayah")
+# Took out Kindred, Graves, Quinn because they are not primarily played bot
+marksmanList <- c("Ashe","Caitlyn","Corki","Draven","Ezreal","Jhin","Jinx","Kalista","Kogmaw","Lucian","Miss Fortune","Sivir","Tristana","Twitch","Varus","Vayne","Xayah")
 
 CleanedmatchinfoNew <- subset(matchinfoNew, blueADCChamp %in% marksmanList)
 CleanedmatchinfoNew <- subset(CleanedmatchinfoNew,redADCChamp %in% marksmanList)
