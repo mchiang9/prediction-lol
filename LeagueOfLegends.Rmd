@@ -20,35 +20,65 @@ setwd("/Users/michael/prediction-lol")
 
 ```{r}
 #read in data set
-matchinfo  <- read.csv(file = "matchinfo.csv")
+matchinfo  <- read.csv(file = "matchinfo.csv", header = T)
 ```
 
 
 ```{r}
-matchinfoNEW = matchinfo %>%
- select(bResult, rResult, blueADCChamp, blueSupportChamp, redADCChamp, redSupportChamp)
+matchinfoNew <- subset(matchinfo, 
+                       select = c('bResult','rResult','blueADCChamp','blueSupportChamp','redADCChamp','redSupportChamp'))
+```
 
-BlueMatch= matchinfoNEW %>%
- select(bResult,blueADCChamp, blueSupportChamp)
+Begin process of cleaning data, so only marksman are in it.
 
-AsheBlue=BlueMatch %>%
- filter(blueADCChamp== "Ashe")
+```{r}
+# Take out non "Marksman" champions
+# List taken from http://leagueoflegends.wikia.com/wiki/ADC
+# Took out Kindred, Graves, Quinn because they are not primarily played bot
+marksmanList <- c("Ashe","Caitlyn","Corki","Draven","Ezreal","Jhin","Jinx","Kalista","Kogmaw","Lucian","Miss Fortune","Sivir","Tristana","Twitch","Varus","Vayne","Xayah")
 
-RedMatch= matchinfoNEW %>%
- select(rResult,redADCChamp, redSupportChamp)
+CleanedmatchinfoNew <- subset(matchinfoNew, blueADCChamp %in% marksmanList & redADCChamp %in% marksmanList)
+#CleanedmatchinfoNew <- subset(CleanedmatchinfoNew,redADCChamp %in% marksmanList)
+```
+There are 6799 observations left cleaned out from 7620 observations
+Clean out support champions
 
-AsheRed=RedMatch %>%
- filter(redADCChamp== "Ashe")
+```{r}
+# Take out non "Support" champions
+# List taken from http://leagueoflegends.wikia.com/wiki/Category:Support_champion
+supportList <- c("Alistar","Annie","Bard","Blitzcrank","Brand","Braum","Fiddlesticks","Galio","Janna","Karma"
+                  ,"Kennen","Leona","Lulu","Lux","Malphite","Miss Fortune","Morgana","Nami","Nautilus","Ornn",
+                  "Poppy","Rakan","Shen","Sion","Sona","Soraka","Tahm Kench","Taric","Teemo","Thresh","Trundle",
+                  "Veigar","Velkoz","Xerath","Zilean","Zoe","Zyra")
 
-TotalAshe=AsheBlue %>%
- summarise (count = n ())
+CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, blueSupportChamp %in% supportList & redSupportChamp %in% supportList)
+#CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, redSupportChamp %in% supportList)
+```
+There are 5701 observations left cleaned out from 6799 observations.
 
-TotalAshe
+Create Ashe/Alistar Dataset
+```{r}
+asheAliB <- subset(CleanedmatchinfoNew, blueADCChamp == "Ashe" & blueSupportChamp == "Alistar")
+asheAliR <- subset(CleanedmatchinfoNew, redADCChamp == "Ashe" & redSupportChamp == "Alistar")
 
-TotalAsheWin= AsheBlue %>%
- filter(bResult==1) %>%
- summarise (count = n ())
+asheAli <- rbind(asheAliB, asheAliR)
+```
 
-TotalAsheWin
+85 total observations of Ashe and Alistar combinations.
+```{r}
+# Total number of Ashe Alistar wins on blue side
+sum(asheAliB$bResult == 1)
+
+# Total number of Ashe Alistar wins on red side
+sum(asheAliR$rResult == 1)
+
+
+asheAliWinTotal <- sum(asheAliB$bResult == 1) + sum(asheAliR$rResult == 1)
+asheAliWinRate <- asheAliWinTotal/nrow(asheAli)
+asheAliWinTotal
+asheAliWinRate
+
+#sum(asheAliB$bResult == 1)/45
+
 ```
 
