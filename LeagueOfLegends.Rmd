@@ -20,7 +20,7 @@ setwd("/Users/michael/prediction-lol")
 
 ```{r}
 #read in data set
-matchinfo  <- read.csv(file = "matchinfo.csv")
+matchinfo  <- read.csv(file = "matchinfo.csv", header = T)
 ```
 
 
@@ -37,8 +37,8 @@ Begin process of cleaning data, so only marksman are in it.
 # Took out Kindred, Graves, Quinn because they are not primarily played bot
 marksmanList <- c("Ashe","Caitlyn","Corki","Draven","Ezreal","Jhin","Jinx","Kalista","Kogmaw","Lucian","Miss Fortune","Sivir","Tristana","Twitch","Varus","Vayne","Xayah")
 
-CleanedmatchinfoNew <- subset(matchinfoNew, blueADCChamp %in% marksmanList)
-CleanedmatchinfoNew <- subset(CleanedmatchinfoNew,redADCChamp %in% marksmanList)
+CleanedmatchinfoNew <- subset(matchinfoNew, blueADCChamp %in% marksmanList & redADCChamp %in% marksmanList)
+#CleanedmatchinfoNew <- subset(CleanedmatchinfoNew,redADCChamp %in% marksmanList)
 ```
 There are 6799 observations left cleaned out from 7620 observations
 Clean out support champions
@@ -51,8 +51,8 @@ supportList <- c("Alistar","Annie","Bard","Blitzcrank","Brand","Braum","Fiddlest
                   "Poppy","Rakan","Shen","Sion","Sona","Soraka","Tahm Kench","Taric","Teemo","Thresh","Trundle",
                   "Veigar","Velkoz","Xerath","Zilean","Zoe","Zyra")
 
-CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, blueSupportChamp %in% supportList)
-CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, redSupportChamp %in% supportList)
+CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, blueSupportChamp %in% supportList & redSupportChamp %in% supportList)
+#CleanedmatchinfoNew <- subset(CleanedmatchinfoNew, redSupportChamp %in% supportList)
 ```
 There are 5701 observations left cleaned out from 6799 observations.
 
@@ -72,9 +72,13 @@ sum(asheAliB$bResult == 1)
 # Total number of Ashe Alistar wins on red side
 sum(asheAliR$rResult == 1)
 
+
 asheAliWinTotal <- sum(asheAliB$bResult == 1) + sum(asheAliR$rResult == 1)
-asheAliWinRate <- asheAliWinTotal/85
+asheAliWinRate <- asheAliWinTotal/nrow(asheAli)
 asheAliWinTotal
 asheAliWinRate
+
+#sum(asheAliB$bResult == 1)/45
+
 ```
 
